@@ -4,7 +4,7 @@ pipeline{
     stages {
         stage('GetProject') {
             steps {
-                git 'https://github.com/fin10g/CT5209_test1Maven.git'
+                git branch: 'main', url: 'https://github.com/fin10g/CT5209_test1Maven.git'
             }
         }
         stage('build') {
