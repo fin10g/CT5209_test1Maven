@@ -1,4 +1,4 @@
-pipeline{
+pipeline {
     agent any
 
     stages {
@@ -7,29 +7,30 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/fin10g/CT5209_test1Maven.git'
             }
         }
-        stage('build') {
+        stage('Build') {
             steps {
-                sh 'mvn clean:clean'
-                sh 'mvn dependency:copy-dependencies'
-                sh 'mvn compiler:compile'
+                sh 'mvn clean package -DskipTests'
             }
         }
-        stage('package') {
+        stage('Test') {
             steps {
-                sh 'mvn package'
+                sh 'mvn test'
             }
         }
-        stage ('Exec') {
+        stage('Exec') {
             steps {
                 sh 'mvn exec:java'
             }
         }
     }
 
-    post{
-        success{
+    post {
+        success {
             archiveArtifacts allowEmptyArchive: true,
-            artifacts: '**/ct5209_test1Maven*.jar'
+                    artifacts: '**/ct5209_test1Maven*.jar'
+        }
+        failure {
+            echo 'Build failed!'
         }
     }
 }
