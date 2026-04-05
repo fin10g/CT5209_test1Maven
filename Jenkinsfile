@@ -25,4 +25,11 @@ pipeline{
             }
         }
     }
+
+    post{
+        success{
+            archiveArtifacts applowEmptyArchive: true,
+            artifacts: '**/ct5209_test1Maven*.jar'
+        }
+    }
 }
